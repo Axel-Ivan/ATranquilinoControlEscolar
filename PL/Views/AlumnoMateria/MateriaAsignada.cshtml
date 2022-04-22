@@ -1,0 +1,86 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "MateriaAsignada";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Materias</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5 class="text-center">Seleccione el boton de "+" para añadir una materia al alumno, o eliminar para quitarla</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="text-right">@Html.ActionLink("+", "Form", "AlumnoMateria", htmlAttributes: new { @class = "btn btn-success" })</p>
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <h4>Alumno</h4>
+    </div>
+    <br/>
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Alumno.Nombre)
+            @Html.TextBoxFor(model => model.Alumno.Nombre, new { @class = "form-control", disabled = "true" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Alumno.ApellidoPaterno)
+            @Html.TextBoxFor(model => model.Alumno.ApellidoPaterno, new { @class = "form-control", disabled = "true" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Alumno.ApellidoMaterno)
+            @Html.TextBoxFor(model => model.Alumno.ApellidoMaterno, new { @class = "form-control", disabled = "true" })
+        </div>
+    </div>
+    <br/>
+
+    @if (Model.Materia.Materias.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td class="form-group" style="display: none;">IdMateria</td>
+                            <td>Materia</td>
+                            <td>Costo</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.AlumnoMateria materia in Model.Materia.Materias)
+                        {
+                            <tr class="text-center">                             
+                                <td class="form-group" style="display: none;">@materia.Materia.IdMateria</td>
+                                <td>@materia.Materia.Nombre</td>
+                                <td>@materia.Materia.Costo</td>
+                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "AlumnoMateria", new { IdMateria = materia.Materia.IdMateria })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    El alumno no tiene registradas materias!!!
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

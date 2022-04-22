@@ -1,0 +1,87 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "Form";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <h1>Añadir Materia</h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h5 class="text-left">Llene los campos con la información de la materia que desea registrar de acuerdo a lo que se indica.</h5>
+        </div>
+    </div>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Alumno.Nombre)
+            @Html.TextBoxFor(model => model.Alumno.Nombre, new { @class = "form-control", disabled = "true" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Alumno.ApellidoPaterno)
+            @Html.TextBoxFor(model => model.Alumno.ApellidoPaterno, new { @class = "form-control", disabled = "true" })
+        </div>
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Alumno.ApellidoMaterno)
+            @Html.TextBoxFor(model => model.Alumno.ApellidoMaterno, new { @class = "form-control", disabled = "true" })
+        </div>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            @using (Html.BeginForm("Form", "Materia", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group" style="display: none;">
+                            @Html.LabelFor(model => model.Materia.IdMateria, new { @class = "hidden" })
+                            @Html.TextBoxFor(model => model.Materia.IdMateria, new { @class = "hidden from-control", autocomplete = "off" })
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Materia.Nombre)
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-alarm"></i></span>
+                            @Html.TextBoxFor(model => model.Materia.Nombre, new { @class = "form-control", @id = "txtNombre", @onkeypress = "return SoloLetras(event, 'lblErrorNombre')", @autocomplete = "off" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Materia.Nombre)
+                        <label id="lblErrorNombre"></label>
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-6">
+                        @Html.LabelFor(model => model.Materia.Costo)
+                        <div class="input-group">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-telephone"></i></span>
+                            @Html.TextBoxFor(model => model.Materia.Costo, new { @class = "form-control", autocomplete = "off" })
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Materia.Costo)
+                    </div>
+                </div>
+                <br />
+
+                <div class="row">
+                    <div class="col-md-1">
+                        <input type="submit" value="Guardar" class="btn btn-success">
+
+                    </div>
+                    <div class="col-md-1">
+                        @Html.ActionLink("Regresar", "MateriaAsignada", "AlumnoMateria", htmlAttributes: new { @class = "btn btn-danger" })
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

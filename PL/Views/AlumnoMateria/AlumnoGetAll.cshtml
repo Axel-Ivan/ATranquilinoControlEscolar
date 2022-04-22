@@ -1,0 +1,57 @@
+﻿@model ML.AlumnoMateria
+@{
+    ViewBag.Title = "AlumnoGetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Alumnos</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5 class="text-center">Seleccione el boton de "Asignar" para visualizar las materias del alumno</h5>
+        </div>
+    </div>
+
+    @if (Model.Alumno.Alumnos.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Asignar</td>
+                            <td class="form-group" style="display: none;">IdAlumno</td>
+                            <td>Nombre Completo</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Alumno alumno in Model.Alumno.Alumnos)
+                        {
+                            <tr class="text-center">
+                                <td><a class="btn btn-primary glyphicon glyphicon-zoom-in" href="@Url.Action("MateriaAsignada", "AlumnoMateria", new { IdAlumno = alumno.IdAlumno })"></a></td>
+                                <td class="form-group" style="display: none;">@alumno.IdAlumno</td>
+                                <td>@alumno.Nombre @alumno.ApellidoPaterno @alumno.ApellidoMaterno</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros de alumno!!!
+                </div>
+            </div>
+        </div>
+    }
+
+</div>

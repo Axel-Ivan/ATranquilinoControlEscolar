@@ -1,0 +1,67 @@
+﻿@model ML.Materia
+@{
+    ViewBag.Title = "GetAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <h2>Materias</h2>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6">
+            <h5 class="text-center">Seleccione el boton de "Agregar" para añadir una materia, el boton de amarillo para actualizarla, y el boton rojo para eliminarla</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <p class="text-right">@Html.ActionLink("+", "Form", "Materia", htmlAttributes: new { @class = "btn btn-success" })</p>
+        </div>
+    </div>
+    <br />
+
+    @if (Model.Materias.Count > 0)
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr class="text-center">
+                            <td>Editar</td>
+                            <td class="form-group" style="display: none;">IdMateria</td>
+                            <td>Nombre</td>
+                            <td>Costo</td>
+                            <td>Eliminar</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ML.Materia materia in Model.Materias)
+                        {
+                        <tr class="text-center">
+                            <td><a class="btn btn-warning glyphicon glyphicon-edit" href="@Url.Action("Form", "Materia", new { IdMateria = materia.IdMateria })"></a></td>
+                            <td class="form-group" style="display: none;">@materia.IdMateria</td>
+                            <td>@materia.Nombre</td>
+                            <td>@materia.Costo</td>
+                            <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "Materia", new { IdMateria = materia.IdMateria })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="alert alert-danger" role="alert">
+                    No se encontraron registros de materia!!!
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
