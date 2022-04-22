@@ -92,5 +92,18 @@ namespace DL
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriasGetAsignadas_Result>("MateriasGetAsignadas", idAlumnoParameter);
         }
+    
+        public virtual int AlumnoMateriaDelete(Nullable<int> idMateria, Nullable<int> idAlumno)
+        {
+            var idMateriaParameter = idMateria.HasValue ?
+                new ObjectParameter("IdMateria", idMateria) :
+                new ObjectParameter("IdMateria", typeof(int));
+    
+            var idAlumnoParameter = idAlumno.HasValue ?
+                new ObjectParameter("IdAlumno", idAlumno) :
+                new ObjectParameter("IdAlumno", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AlumnoMateriaDelete", idMateriaParameter, idAlumnoParameter);
+        }
     }
 }

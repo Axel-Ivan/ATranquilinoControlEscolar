@@ -9,6 +9,7 @@ namespace PL.Controllers
     public class AlumnoMateriaController : Controller
     {
         // GET: AlumnoMateria
+        [HttpGet]
         public ActionResult AlumnoGetAll()
         {
             ML.Result resultAlumnos = BL.Alumno.GetAll();
@@ -20,7 +21,6 @@ namespace PL.Controllers
                 alumnoMateria.Alumno.Alumnos = new List<object>();
                 alumnoMateria.Alumno.Alumnos = resultAlumnos.Objects;
             }
-
             return View(alumnoMateria);
         }
 
@@ -37,7 +37,7 @@ namespace PL.Controllers
                 alumnoMateria.Alumno = new ML.Alumno();
                 alumnoMateria.Alumno = (ML.Alumno)resultAlumno.Object;
 
-                ML.Result resultMaterias = BL.Materia.MateriasGetAsignadas(IdAlumno.Value);
+                ML.Result resultMaterias = BL.AlumnoMateria.MateriasGetAsignadas(IdAlumno.Value);
                 //Session["Materias"] = resultMaterias; 
                 alumnoMateria.Materia = new ML.Materia();
                 alumnoMateria.Materia.Materias = new List<object>();
@@ -56,16 +56,14 @@ namespace PL.Controllers
                 //ML.Result resultMaterias = new ML.Result();
                 //resultMaterias = (ML.Result)Session["Materias"];
                 //No se pueden guardar las materias porque no se verian reflejadas las que se agreguen
-                ML.Result resultMaterias = BL.Materia.MateriasGetAsignadas(alumnoMateria.Alumno.IdAlumno);               
+                ML.Result resultMaterias = BL.AlumnoMateria.MateriasGetAsignadas(alumnoMateria.Alumno.IdAlumno);               
 
                 alumnoMateria.Materia = new ML.Materia();
                 alumnoMateria.Materia.Materias = new List<object>();
                 alumnoMateria.Materia.Materias = resultMaterias.Objects;
 
                 return View(alumnoMateria);
-            }
-
-            
+            }           
         }
 
         [HttpGet]
@@ -85,7 +83,25 @@ namespace PL.Controllers
         [HttpPost]
         public ActionResult Form(ML.Materia materia)
         {
+            
 
+            return PartialView("ValidationModal");
+        }
+
+        [HttpGet]
+        public ActionResult Delete(ML.AlumnoMateria alumnoMateria)
+        {
+            ML.Result result = new ML.Result();
+            result = BL.AlumnoMateria.AlumnoDeleteMateria(alumnoMateria);
+
+            if (result.Correct)
+            {
+                ViewBag.Message = "Se eliminó la materia del alumno!!!";
+            }
+            else
+            {
+                ViewBag.Message = "No se eliminó la materia, ocurrió el siguiente error: " + result.ErrorMessage;
+            }
 
             return PartialView("ValidationModal");
         }

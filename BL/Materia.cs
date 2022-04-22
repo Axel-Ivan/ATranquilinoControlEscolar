@@ -164,46 +164,47 @@ namespace BL
 
             return result;
         }
-        public static ML.Result MateriasGetAsignadas(int IdAlumno)
-        {
-            ML.Result result = new ML.Result();
 
-            try
-            {
-                using (DL.ATranquilinoControlEscolarEntities context = new DL.ATranquilinoControlEscolarEntities())
-                {
-                    var procedure = context.MateriasGetAsignadas(IdAlumno);
-                    result.Objects = new List<object>();
+        //public static ML.Result MateriasGetAsignadas(int IdAlumno)
+        //{
+        //    ML.Result result = new ML.Result();
 
-                    if(procedure != null)
-                    {
-                        foreach (var obj in procedure)
-                        {
-                            ML.AlumnoMateria alumnoMateria = new ML.AlumnoMateria();
-                            alumnoMateria.IdAlumnoMateria = obj.IdAlumnoMateria;
-                            alumnoMateria.Alumno = new ML.Alumno();
-                            alumnoMateria.Alumno.IdAlumno = obj.IdAlumno;
-                            alumnoMateria.Materia = new ML.Materia();
-                            alumnoMateria.Materia.IdMateria = obj.IdMateria;
-                            alumnoMateria.Materia.Nombre = obj.MateriaNombre;
-                            alumnoMateria.Materia.Costo = obj.Costo.Value;
-                            result.Objects.Add(alumnoMateria);
-                        }
-                    }
-                    else
-                    {
-                        result.Correct = false;
-                    }
-                    result.Correct = true;
-                }
-            }
-            catch (Exception ex)
-            {
-                result.Correct = false;
-                result.ErrorMessage = ex.Message;
-            }
+        //    try
+        //    {
+        //        using (DL.ATranquilinoControlEscolarEntities context = new DL.ATranquilinoControlEscolarEntities())
+        //        {
+        //            var procedure = context.MateriasGetAsignadas(IdAlumno);
+        //            result.Objects = new List<object>();
 
-            return result;
-        }
+        //            if(procedure != null)
+        //            {
+        //                foreach (var obj in procedure)
+        //                {
+        //                    ML.AlumnoMateria alumnoMateria = new ML.AlumnoMateria();
+        //                    alumnoMateria.IdAlumnoMateria = obj.IdAlumnoMateria;
+        //                    alumnoMateria.Alumno = new ML.Alumno();
+        //                    alumnoMateria.Alumno.IdAlumno = obj.IdAlumno;
+        //                    alumnoMateria.Materia = new ML.Materia();
+        //                    alumnoMateria.Materia.IdMateria = obj.IdMateria;
+        //                    alumnoMateria.Materia.Nombre = obj.MateriaNombre;
+        //                    alumnoMateria.Materia.Costo = obj.Costo.Value;
+        //                    result.Objects.Add(alumnoMateria);
+        //                }
+        //            }
+        //            else
+        //            {
+        //                result.Correct = false;
+        //            }
+        //            result.Correct = true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Correct = false;
+        //        result.ErrorMessage = ex.Message;
+        //    }
+
+        //    return result;
+        //}
     }
 }

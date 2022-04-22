@@ -64,7 +64,7 @@
                                 <td class="form-group" style="display: none;">@materia.Materia.IdMateria</td>
                                 <td>@materia.Materia.Nombre</td>
                                 <td>@materia.Materia.Costo</td>
-                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "AlumnoMateria", new { IdMateria = materia.Materia.IdMateria })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "AlumnoMateria", new { IdAlumnoMateria = materia.Alumno.IdAlumno })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
                             </tr>
                         }
                     </tbody>

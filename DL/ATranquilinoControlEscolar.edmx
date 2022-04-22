@@ -54,6 +54,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="AlumnoMateriaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdMateria" Type="int" Mode="In" />
+          <Parameter Name="IdAlumno" Type="int" Mode="In" />
+        </Function>
         <Function Name="MateriaAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
           <Parameter Name="Costo" Type="decimal" Mode="In" />
@@ -172,6 +176,10 @@
             <Parameter Name="Costo" Mode="In" Type="Decimal" />
           </FunctionImport>
           <FunctionImport Name="MateriasGetAsignadas" ReturnType="Collection(ATranquilinoControlEscolarModel.MateriasGetAsignadas_Result)">
+          <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AlumnoMateriaDelete">
+            <Parameter Name="IdMateria" Mode="In" Type="Int32" />
             <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
@@ -258,6 +266,7 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AlumnoMateriaDelete" FunctionName="ATranquilinoControlEscolarModel.Store.AlumnoMateriaDelete" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
