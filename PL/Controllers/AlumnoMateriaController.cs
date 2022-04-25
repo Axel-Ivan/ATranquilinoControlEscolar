@@ -67,7 +67,7 @@ namespace PL.Controllers
         }
 
         [HttpGet]
-        public ActionResult Form()
+        public ActionResult MateriasNoAsignadas(int IdAlumno)
         {
             ML.AlumnoMateria alumnoMateria = new ML.AlumnoMateria();
 
@@ -77,13 +77,43 @@ namespace PL.Controllers
             alumnoMateria.Alumno = new ML.Alumno();
             alumnoMateria.Alumno = (ML.Alumno)result.Object;
 
+            result = BL.AlumnoMateria.AlumnoMateriasNoAsignadas(IdAlumno);           
+            alumnoMateria.Materia = new ML.Materia();
+            alumnoMateria.Materia.Materias = result.Objects;
+
             return View(alumnoMateria);
         }
 
         [HttpPost]
-        public ActionResult Form(ML.Materia materia)
+        public ActionResult MateriasNoAsignadas(ML.AlumnoMateria alumnoMateria)
         {
-            
+            string[] arreglo = new string[6];
+            arreglo[0] = Request.Form["Matematicas"];
+            arreglo[1] = Request.Form["Ingles"];
+            arreglo[2] = Request.Form["Biología"];
+            arreglo[3] = Request.Form["Quimica"];
+            arreglo[4] = Request.Form["Programacion"];
+            arreglo[5] = Request.Form["Dibujo Técnico"];
+
+            for(int i = 0; i < 6; i++)
+            {
+                arreglo[i] = (arreglo[i] == null) ? "0" : arreglo[i];
+
+                if (arreglo[i] != "0")
+                {
+                    int IdMateria = Convert.ToInt32(arreglo[i]);
+                    ML.Result result = BL.AlumnoMateria.MateriaAdd(alumnoMateria.Alumno.IdAlumno, IdMateria);
+
+                    if (result.Correct)
+                    {
+                        ViewBag.Message = "Se agreg+o el registro correctamente!!!";
+                    }
+                    else
+                    {
+                        ViewBag.Message = "Ocurrió un error al ingresar la materia: " + result.ErrorMessage;
+                    }
+                }
+            }
 
             return PartialView("ValidationModal");
         }

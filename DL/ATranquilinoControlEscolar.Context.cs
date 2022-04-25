@@ -93,17 +93,35 @@ namespace DL
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriasGetAsignadas_Result>("MateriasGetAsignadas", idAlumnoParameter);
         }
     
-        public virtual int AlumnoMateriaDelete(Nullable<int> idMateria, Nullable<int> idAlumno)
+        public virtual int AlumnoMateriaDelete(Nullable<int> idAlumnoMateria)
         {
-            var idMateriaParameter = idMateria.HasValue ?
-                new ObjectParameter("IdMateria", idMateria) :
-                new ObjectParameter("IdMateria", typeof(int));
+            var idAlumnoMateriaParameter = idAlumnoMateria.HasValue ?
+                new ObjectParameter("IdAlumnoMateria", idAlumnoMateria) :
+                new ObjectParameter("IdAlumnoMateria", typeof(int));
     
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AlumnoMateriaDelete", idAlumnoMateriaParameter);
+        }
+    
+        public virtual ObjectResult<MateriaGetNoAsignada_Result> MateriaGetNoAsignada(Nullable<int> idAlumno)
+        {
             var idAlumnoParameter = idAlumno.HasValue ?
                 new ObjectParameter("IdAlumno", idAlumno) :
                 new ObjectParameter("IdAlumno", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AlumnoMateriaDelete", idMateriaParameter, idAlumnoParameter);
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<MateriaGetNoAsignada_Result>("MateriaGetNoAsignada", idAlumnoParameter);
+        }
+    
+        public virtual int AlumnoMateriaAdd(Nullable<int> idAlumo, Nullable<int> idMateria)
+        {
+            var idAlumoParameter = idAlumo.HasValue ?
+                new ObjectParameter("IdAlumo", idAlumo) :
+                new ObjectParameter("IdAlumo", typeof(int));
+    
+            var idMateriaParameter = idMateria.HasValue ?
+                new ObjectParameter("IdMateria", idMateria) :
+                new ObjectParameter("IdMateria", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("AlumnoMateriaAdd", idAlumoParameter, idMateriaParameter);
         }
     }
 }

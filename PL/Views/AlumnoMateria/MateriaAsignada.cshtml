@@ -16,18 +16,18 @@
             <h5 class="text-center">Seleccione el boton de "+" para añadir una materia al alumno, o eliminar para quitarla</h5>
         </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <p class="text-right">@Html.ActionLink("+", "Form", "AlumnoMateria", htmlAttributes: new { @class = "btn btn-success" })</p>
-        </div>
-    </div>
-    <br />
 
     <div class="row">
         <h4>Alumno</h4>
     </div>
-    <br/>
+    <br />
 
+    <div class="row">
+        <div class="col-md-4">
+            @Html.LabelFor(model => model.Alumno.IdAlumno, new { @class = "hidden" })
+            @Html.TextBoxFor(model => model.Alumno.IdAlumno, new { @class = "hidden from-control" })
+        </div>
+    </div>
     <div class="row">
         <div class="col-md-4">
             @Html.LabelFor(model => model.Alumno.Nombre)
@@ -42,7 +42,26 @@
             @Html.TextBoxFor(model => model.Alumno.ApellidoMaterno, new { @class = "form-control", disabled = "true" })
         </div>
     </div>
-    <br/>
+    <br />
+
+    <div class="row">
+        <div class=" col-lg-4">
+            <label>Asignar</label>
+        </div>
+        <br />
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr class="text-left">
+                        <td><a class="btn btn-primary glyphicon glyphicon-piggy-bank" href="@Url.Action("MateriasNoAsignadas", "AlumnoMateria", new { IdAlumno = Model.Alumno.IdAlumno })"</a></td>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+    <br />
 
     @if (Model.Materia.Materias.Count > 0)
     {
@@ -60,15 +79,16 @@
                     <tbody>
                         @foreach (ML.AlumnoMateria materia in Model.Materia.Materias)
                         {
-                            <tr class="text-center">                             
+                            <tr class="text-center">
                                 <td class="form-group" style="display: none;">@materia.Materia.IdMateria</td>
                                 <td>@materia.Materia.Nombre</td>
                                 <td>@materia.Materia.Costo</td>
-                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "AlumnoMateria", new { IdAlumnoMateria = materia.Alumno.IdAlumno })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
+                                <td><a class="btn btn-danger glyphicon glyphicon-trash" href="@Url.Action("Delete", "AlumnoMateria", new { IdAlumnoMateria = materia.IdAlumnoMateria })" onclick="return confirm('Estas seguro que deseas eliminar este registro?');"></a></td>
                             </tr>
                         }
                     </tbody>
                 </table>
+
             </div>
         </div>
     }

@@ -54,9 +54,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="AlumnoMateriaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="AlumnoMateriaAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAlumo" Type="int" Mode="In" />
           <Parameter Name="IdMateria" Type="int" Mode="In" />
-          <Parameter Name="IdAlumno" Type="int" Mode="In" />
+        </Function>
+        <Function Name="AlumnoMateriaDelete" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAlumnoMateria" Type="int" Mode="In" />
         </Function>
         <Function Name="MateriaAdd" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="Nombre" Type="varchar" Mode="In" />
@@ -68,6 +71,9 @@
         <Function Name="MateriaGetAll" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <Function Name="MateriaGetById" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdMateria" Type="int" Mode="In" />
+        </Function>
+        <Function Name="MateriaGetNoAsignada" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="IdAlumno" Type="int" Mode="In" />
         </Function>
         <Function Name="MateriasGetAsignadas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="IdAlumno" Type="int" Mode="In" />
@@ -179,8 +185,14 @@
           <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="AlumnoMateriaDelete">
+          <Parameter Name="IdAlumnoMateria" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="MateriaGetNoAsignada" ReturnType="Collection(ATranquilinoControlEscolarModel.MateriaGetNoAsignada_Result)">
+          <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="AlumnoMateriaAdd">
+            <Parameter Name="IdAlumo" Mode="In" Type="Int32" />
             <Parameter Name="IdMateria" Mode="In" Type="Int32" />
-            <Parameter Name="IdAlumno" Mode="In" Type="Int32" />
           </FunctionImport>
         </EntityContainer>
         <ComplexType Name="MateriaGetAll_Result">
@@ -198,6 +210,11 @@
           <Property Type="Int32" Name="IdMateria" Nullable="false" />
           <Property Type="Int32" Name="IdAlumno" Nullable="false" />
           <Property Type="String" Name="MateriaNombre" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="Costo" Nullable="true" Precision="10" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="MateriaGetNoAsignada_Result">
+          <Property Type="Int32" Name="IdMateria" Nullable="false" />
+          <Property Type="String" Name="Nombre" Nullable="true" MaxLength="50" />
           <Property Type="Decimal" Name="Costo" Nullable="true" Precision="10" Scale="2" />
         </ComplexType>
       </Schema>
@@ -267,6 +284,16 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="AlumnoMateriaDelete" FunctionName="ATranquilinoControlEscolarModel.Store.AlumnoMateriaDelete" />
+          <FunctionImportMapping FunctionImportName="MateriaGetNoAsignada" FunctionName="ATranquilinoControlEscolarModel.Store.MateriaGetNoAsignada">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="ATranquilinoControlEscolarModel.MateriaGetNoAsignada_Result">
+                <ScalarProperty Name="IdMateria" ColumnName="IdMateria" />
+                <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+                <ScalarProperty Name="Costo" ColumnName="Costo" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="AlumnoMateriaAdd" FunctionName="ATranquilinoControlEscolarModel.Store.AlumnoMateriaAdd" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

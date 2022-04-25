@@ -58,9 +58,77 @@ namespace BL
             {
                 using (DL.ATranquilinoControlEscolarEntities context = new DL.ATranquilinoControlEscolarEntities())
                 {
-                    var procedure = context.AlumnoMateriaDelete(alumnoMateria.Materia.IdMateria, alumnoMateria.Alumno.IdAlumno);
+                    var procedure = context.AlumnoMateriaDelete(alumnoMateria.IdAlumnoMateria);
 
                     if(procedure >= 1)
+                    {
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public static ML.Result AlumnoMateriasNoAsignadas(int IdAlumno)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using (DL.ATranquilinoControlEscolarEntities context = new DL.ATranquilinoControlEscolarEntities())
+                {
+                    var procedure = context.MateriaGetNoAsignada(IdAlumno).ToList();
+                    result.Objects = new List<object>();
+
+                    if(procedure != null)
+                    {
+                        foreach(var obj in procedure)
+                        {
+                            ML.AlumnoMateria alumnoMateria = new ML.AlumnoMateria();
+                            alumnoMateria.Materia = new ML.Materia();
+                            alumnoMateria.Materia.IdMateria = obj.IdMateria;
+                            alumnoMateria.Materia.Nombre = obj.Nombre;
+                            alumnoMateria.Materia.Costo = obj.Costo.Value;
+                            result.Objects.Add(alumnoMateria);
+                        }
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
+                    result.Correct = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                result.Correct = false;
+                result.ErrorMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public static ML.Result MateriaAdd(int IdAlumno, int IdMateria)
+        {
+            ML.Result result = new ML.Result();
+
+            try
+            {
+                using(DL.ATranquilinoControlEscolarEntities context = new DL.ATranquilinoControlEscolarEntities())
+                {
+                    var procedure = context.AlumnoMateriaAdd(IdAlumno, IdMateria);
+
+                    if (procedure >= 1)
                     {
                         result.Correct = true;
                     }

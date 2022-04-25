@@ -82,6 +82,9 @@
     <Compile Include="MateriaGetById_Result.cs">
       <DependentUpon>ATranquilinoControlEscolar.tt</DependentUpon>
     </Compile>
+    <Compile Include="MateriaGetNoAsignada_Result.cs">
+      <DependentUpon>ATranquilinoControlEscolar.tt</DependentUpon>
+    </Compile>
     <Compile Include="MateriasGetAsignadas_Result.cs">
       <DependentUpon>ATranquilinoControlEscolar.tt</DependentUpon>
     </Compile>
