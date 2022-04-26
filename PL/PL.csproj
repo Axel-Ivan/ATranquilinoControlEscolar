@@ -166,7 +166,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\AlumnoMateria\Form.cshtml" />
     <Content Include="Views\AlumnoMateria\ValidationModal.cshtml" />
     <Content Include="Views\AlumnoMateria\MateriasNoAsignadas.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />

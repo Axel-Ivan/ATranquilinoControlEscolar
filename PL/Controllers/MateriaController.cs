@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
+//using Microsoft.Extensions.Configuration;
 //using System.Configuration.ConfigurationManager;
 
 namespace PL.Controllers
@@ -99,6 +100,9 @@ namespace PL.Controllers
             {
                 var errors = ModelState.Values.SelectMany(v => v.Errors);
                 ML.Result result = new ML.Result();
+
+                //Pruebas AppSettings
+                //if(materia.Nombre.ConfigurationManager.AppSettings["ValidacionNombreMateria"])
 
                 if(materia.IdMateria == null || materia.IdMateria == 0) //Comienza Add
                 {

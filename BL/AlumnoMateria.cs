@@ -118,7 +118,7 @@ namespace BL
             return result;
         }
 
-        public static ML.Result MateriaAdd(int IdAlumno, int IdMateria)
+        public static ML.Result MateriaAdd(ML.AlumnoMateria alumnoMateria)
         {
             ML.Result result = new ML.Result();
 
@@ -126,7 +126,7 @@ namespace BL
             {
                 using(DL.ATranquilinoControlEscolarEntities context = new DL.ATranquilinoControlEscolarEntities())
                 {
-                    var procedure = context.AlumnoMateriaAdd(IdAlumno, IdMateria);
+                    var procedure = context.AlumnoMateriaAdd(alumnoMateria.Alumno.IdAlumno, alumnoMateria.Materia.IdMateria);
 
                     if (procedure >= 1)
                     {

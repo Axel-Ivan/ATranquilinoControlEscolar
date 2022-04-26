@@ -11,5 +11,6 @@ namespace ML
         public int IdAlumnoMateria { get; set; }
         public ML.Alumno Alumno { get; set; }
         public ML.Materia Materia { get; set; }
+        public List<object> AlumnoMaterias { get; set; }
     }
 }
