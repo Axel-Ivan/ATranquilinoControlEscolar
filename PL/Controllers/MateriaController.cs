@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Net.Http;
+using System.Configuration;
 //using Microsoft.Extensions.Configuration;
 //using System.Configuration.ConfigurationManager;
 
@@ -98,11 +99,15 @@ namespace PL.Controllers
         {
             if(ModelState.IsValid)
             {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
                 ML.Result result = new ML.Result();
 
                 //Pruebas AppSettings
-                //if(materia.Nombre.ConfigurationManager.AppSettings["ValidacionNombreMateria"])
+                char[] validacionNombreMateria = ConfigurationManager.AppSettings["ValidacionNombreMateria"].ToCharArray();
+
+                foreach(char caracter in validacionNombreMateria)
+                {
+                    materia.Nombre = materia.Nombre.Replace(caracter.ToString(), "");
+                }
 
                 if(materia.IdMateria == null || materia.IdMateria == 0) //Comienza Add
                 {

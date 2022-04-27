@@ -100,17 +100,20 @@ namespace PL.Controllers
             }
             else
             {
-                //return RedirectToAction("MateriaAsignada", alumnoMateria.Alumno.IdAlumno);
-                return RedirectToAction("MateriaAsignada", "AlumnoMateria", new { IdAlumno = alumnoMateria.Alumno.IdAlumno });
+                return RedirectToAction("MateriaAsignada", "AlumnoMateria", new { IdAlumno = alumnoMateria.Alumno.IdAlumno }); //No aparecerá modal
             }
-            //return RedirectToAction("MateriaAsignada", alumnoMateria.Alumno.IdAlumno);
-            return RedirectToAction("MateriaAsignada", "AlumnoMateria", new { IdAlumno = alumnoMateria.Alumno.IdAlumno });
+            //return PartialView("ValidationModal", alumnoMateria); Aparecera Modal
+            return RedirectToAction("MateriaAsignada", "AlumnoMateria", new { IdAlumno = alumnoMateria.Alumno.IdAlumno }); //No aparecerá modal
         }
 
         [HttpGet]
-        public ActionResult Delete(ML.AlumnoMateria alumnoMateria)
+        public ActionResult Delete(int IdAlumno, int IdAlumnoMateria)
         {
             ML.Result result = new ML.Result();
+            ML.AlumnoMateria alumnoMateria = new ML.AlumnoMateria();
+            alumnoMateria.Alumno = new ML.Alumno();
+            alumnoMateria.IdAlumnoMateria = IdAlumnoMateria;
+            alumnoMateria.Alumno.IdAlumno = IdAlumno;
             result = BL.AlumnoMateria.AlumnoDeleteMateria(alumnoMateria);
 
             if (result.Correct)
@@ -122,7 +125,7 @@ namespace PL.Controllers
                 ViewBag.Message = "No se eliminó la materia, ocurrió el siguiente error: " + result.ErrorMessage;
             }
 
-            return PartialView("ValidationModal");
+            return PartialView("ValidationModal", alumnoMateria);
         }
     }
 }
